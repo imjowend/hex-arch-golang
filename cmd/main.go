@@ -1,16 +1,14 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/imjowend/hex-arch-golang/internal/adapters/core/arithmetic"
-)
+// import (
+// 	"github.com/imjowend/hex-arch-golang/internal/adapters/core/arithmetic"
+// 	"github.com/imjowend/hex-arch-golang/internal/ports"
+// )
 
 func main() {
-	arithAdapter := arithmetic.NewAdapter()
-	result, err := arithAdapter.Addition(1, 2)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(result)
+
+	// Ports
+	// var core ports.AritmethicPort
+	// core = arithmetic.NewAdapter()
+
 }
