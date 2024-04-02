@@ -5,11 +5,13 @@ import (
 )
 
 type Adapter struct {
+	db    ports.DbPort
 	arith ports.AritmethicPort
 }
 
-func NewAdapter(arith ports.AritmethicPort) *Adapter {
+func NewAdapter(db ports.DbPort, arith ports.AritmethicPort) *Adapter {
 	return &Adapter{
+		db:    db,
 		arith: arith,
 	}
 }
@@ -19,11 +21,22 @@ func (apiAdapter Adapter) GetAddition(a, b int32) (int32, error) {
 	if err != nil {
 		return 0, err
 	}
+
+	err = apiAdapter.db.AddToHistory(answer, "addition")
+	if err != nil {
+		return 0, err
+	}
+
 	return answer, nil
 }
 
 func (apiAdapter Adapter) GetSubstraction(a, b int32) (int32, error) {
 	answer, err := apiAdapter.arith.Substraction(a, b)
+	if err != nil {
+		return 0, err
+	}
+
+	err = apiAdapter.db.AddToHistory(answer, "substraction")
 	if err != nil {
 		return 0, err
 	}
@@ -35,6 +48,12 @@ func (apiAdapter Adapter) GetMultiplication(a, b int32) (int32, error) {
 	if err != nil {
 		return 0, err
 	}
+
+	err = apiAdapter.db.AddToHistory(answer, "multiplication")
+	if err != nil {
+		return 0, err
+	}
+
 	return answer, nil
 }
 
@@ -43,5 +62,11 @@ func (apiAdapter Adapter) GetDivision(a, b int32) (int32, error) {
 	if err != nil {
 		return 0, err
 	}
+
+	err = apiAdapter.db.AddToHistory(answer, "division")
+	if err != nil {
+		return 0, err
+	}
+
 	return answer, nil
 }
